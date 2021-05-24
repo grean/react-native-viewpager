@@ -1,0 +1,42 @@
+{
+  "name": "@grean/react-native-viewpager",
+  "version": "0.0.1-alpha.1",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "source": "src/index",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "release": "release-it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grean/react-native-viewpager.git"
+  },
+  "dependencies": {
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native-reanimated": "~2.1.0",
+    "react-native-redash": "^16.0.11"
+  },
+  "peerDependencies": {
+    "react": "16.13.1",
+    "react-native": "0.63.2"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.0",
+    "@types/react": "~16.9.35",
+    "@types/react-native": "~0.63.2",
+    "typescript": "4.2.4",
+    "release-it": "*"
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "license": "MIT"
+}
