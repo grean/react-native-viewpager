@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-// import Picker from '@grean/react-native-carousel-picker';
+import Picker from '@grean/react-native-carousel-picker';
 import ViewPager from '@grean/react-native-viewpager';
 import { useFonts } from 'expo-font';
 
@@ -45,7 +45,8 @@ export default function App() {
   ]
   const items = profils.map(item => item.title)
   const marginVerticalPercentage = 0
-  const marginHorizontalPercentage = 0.05
+  const marginHorizontalPercentage = 0
+  // const marginHorizontalPercentage = 0.05
 
   const onChanged = (itemIndex: number) => {
     setItemIndex(itemIndex)
@@ -99,8 +100,8 @@ export default function App() {
             <View style={styles.header}>
             </View>
             <View style={styles.picker}>
-              <Text>lol</Text>
-              {/* <Picker
+              {/* <Text>lol</Text> */}
+              <Picker
                 {...{
                   items,
                   currentItemIndex,
@@ -122,9 +123,9 @@ export default function App() {
                     // textShadowOffset: { width: 3, height: 3 },
                     // textShadowRadius: 10,
                   },
-                  fontScale: 1,
+                  fontSize: 200,
                 }}
-              /> */}
+              />
             </View>
             <View style={styles.bottom}>
             </View>
