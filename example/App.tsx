@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Picker from '@grean/react-native-carousel-picker';
-import ViewPager from '@grean/react-native-viewpager';
 import { useFonts } from 'expo-font';
+import Picker from '@grean/react-native-carousel-picker';
 
+import ViewPager from '../src/index';
 
 
 export default function App() {
@@ -45,8 +45,8 @@ export default function App() {
   ]
   const items = profils.map(item => item.title)
   const marginVerticalPercentage = 0
-  const marginHorizontalPercentage = 0
-  // const marginHorizontalPercentage = 0.05
+  // const marginHorizontalPercentage = 0
+  const marginHorizontalPercentage = 0.05
 
   const onChanged = (itemIndex: number) => {
     setItemIndex(itemIndex)
@@ -70,6 +70,39 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.background}>
+        {/* <ViewPager
+          {...{
+            containerStyle: {
+              flex: 0.85,
+              // flex: 0.765,
+              // backgroundColor: '#fff',
+              overflow: 'hidden',
+              // alignItems: 'center',
+              // backgroundColor: 'pink',
+              // backgroundColor: 'transparent',
+            },
+            childStyle: {
+              flex: 1,
+              // marginVertical,
+              // paddingTop: itemHeight,
+              backgroundColor: "green",
+              flexDirection: 'row',
+              // justifyContent: 'flex-end',
+            },
+            currentPageIndex,
+            onChanged: onPageChanged,
+          }}
+        >
+          <View style={styles.page}>
+            <Text style={styles.text}>lol1</Text>
+          </View>
+          <View style={styles.page}>
+            <Text style={styles.text}>lol2</Text>
+          </View>
+          <View style={styles.page}>
+            <Text style={styles.text}>lol3</Text>
+          </View>
+        </ViewPager> */}
         <ViewPager
           {...{
             containerStyle: {
@@ -85,7 +118,7 @@ export default function App() {
               flex: 1,
               // marginVertical,
               // paddingTop: itemHeight,
-              // backgroundColor: "green",
+              backgroundColor: "green",
               flexDirection: 'row',
               // justifyContent: 'flex-end',
             },
@@ -97,10 +130,10 @@ export default function App() {
             <Text style={styles.text}>lol1</Text>
           </View>
           <View style={styles.page}>
+            {/* <Text>lol</Text> */}
             <View style={styles.header}>
             </View>
             <View style={styles.picker}>
-              {/* <Text>lol</Text> */}
               <Picker
                 {...{
                   items,
@@ -117,7 +150,7 @@ export default function App() {
                     // ...textShadow
                   },
                   containerStyle: {
-                    backgroundColor: 'green',
+                    // backgroundColor: 'green',
                     // ...carouPicker,
                     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
                     // textShadowOffset: { width: 3, height: 3 },
@@ -127,10 +160,7 @@ export default function App() {
                 }}
               />
             </View>
-            <View style={styles.bottom}>
-            </View>
-            {/* <View style={styles.footer}>
-            </View> */}
+            <View style={styles.bottom}></View>
           </View>
           <View style={styles.page}>
             <Text style={styles.text}>lol3</Text>
@@ -164,18 +194,19 @@ const styles = StyleSheet.create({
   },
   picker: {
     flex: 1,
+    backgroundColor: 'cyan',
   },
   bottom: {
     flex: 1.5,
     backgroundColor: 'purple',
   },
-  // footer: {
-  // flex: 0.5,
-  // backgroundColor: 'orange',
-  // },
   page: {
     flex: 1,
     backgroundColor: 'transparent',
     justifyContent: 'center',
   },
+  // footer: {
+  // flex: 0.5,
+  // backgroundColor: 'orange',
+  // },
 });
