@@ -115,7 +115,7 @@ const PageItem = ({
 const styles = StyleSheet.create({
   container: {
     // justifyContent: "flex-end",
-    backgroundColor: 'cyan',
+    // backgroundColor: 'cyan',
     // overflow: 'visible',
   },
   title: {
