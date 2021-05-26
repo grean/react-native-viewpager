@@ -44,27 +44,27 @@ const pak = require('../package.json');
 const escape = require('escape-string-regexp');
 const path = require('path');
 
-///Users/rgb/Projects/tests/react-native-carousel-picker
 const root = path.resolve(__dirname, '..');
 
-///Users/rgb/Projects/tests/react-native-carousel-picker/example
 console.log(`root ${root}`);
-console.log(`process ${process.cwd()}`);
-console.log(`dirname ${__dirname}`);
+console.log(`process.cwd ${process.cwd()}`);
+console.log(`__dirname ${__dirname}`);
 
-const extraNodeModules = {
-  [pak.name]: root,
-};
+// const extraNodeModules = {
+//   [pak.name]: root,
+// };
 
-const modules = Object.keys({
+const peerModules = Object.keys({
   ...pak.peerDependencies,
 });
 
 const watchFolders = [
   root,
 ];
+
 module.exports = {
   projectRoot: __dirname,
+  watchFolders,
   transformer: {
     getTransformOptions: async () => ({
       transform: {
@@ -74,8 +74,8 @@ module.exports = {
     }),
   },
   resolver: {
-    blacklistRE: exclusionList(modules.map((m) => new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`))),
-    extraNodeModules: modules.reduce((acc, name) => {
+    blacklistRE: exclusionList(peerModules.map((m) => new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`))),
+    extraNodeModules: peerModules.reduce((acc, name) => {
       const lol = path.join(__dirname, 'node_modules', name);
       console.log(`name ${lol}`)
       acc[name] = lol
@@ -93,5 +93,4 @@ module.exports = {
     //   }
     // }),
   },
-  watchFolders,
 };

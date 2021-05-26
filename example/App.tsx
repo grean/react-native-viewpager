@@ -45,8 +45,8 @@ export default function App() {
   ]
   const items = profils.map(item => item.title)
   const marginVerticalPercentage = 0
-  // const marginHorizontalPercentage = 0
-  const marginHorizontalPercentage = 0.05
+  const marginHorizontalPercentage = 0
+  // const marginHorizontalPercentage = 0.05
 
   const onChanged = (itemIndex: number) => {
     setItemIndex(itemIndex)
@@ -150,7 +150,7 @@ export default function App() {
                     // ...textShadow
                   },
                   containerStyle: {
-                    // backgroundColor: 'green',
+                    backgroundColor: 'green',
                     // ...carouPicker,
                     // textShadowColor: 'rgba(0, 0, 0, 0.75)',
                     // textShadowOffset: { width: 3, height: 3 },
