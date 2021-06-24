@@ -34,6 +34,7 @@ interface ViewPagerProps {
   index: number
   navigation?: boolean
   navigationHeight?: number
+  navigationPadding?: number
   // navigationStyle: ViewStyle
   onChanged?: (index: number) => void
   pointColor?: number[]
@@ -50,6 +51,7 @@ const ViewPager = ({
   index = 0,
   navigation = true,
   navigationHeight = 0.1,
+  navigationPadding,
   tickRadius,
   pointColor,
   pointRadius,

@@ -12,6 +12,7 @@ interface NavigationProps {
   count: number
   height: number
   index: number
+  navigationPadding?: number
   onChanged?: (index: number) => void
   pointColor?: number[]
   pointRadius?: number
@@ -28,6 +29,7 @@ const Navigation = ({
   containerStyle,
   height,
   index,
+  navigationPadding = height * 0.02,
   onChanged,
   pointColor = [255, 255, 255],
   pointRadius = height / 6,
@@ -71,18 +73,10 @@ const Navigation = ({
     };
   });
 
-  // const animatedProps = useAnimatedProps(() => {
-  //   const cx = -scrollX.value / count + part / 2
-  //   console.log(`scrollX ${-scrollX.value} cx ${cx}`)
-  //   return {
-  //     cx
-  //   };
-  // });
-  // console.log(`snapoints ${snapPoints}`)
   return (
     <View style={[{
       position: 'absolute',
-      bottom: 0,
+      bottom: height * navigationPadding,
       // top: 0,
       width,
       height,
@@ -120,7 +114,6 @@ const Navigation = ({
             }}
           />
         )}
-        {/* {console.log(`cx ${scrollX.value / count}`)} */}
         <AnimatedCircle
           {...{
             animatedProps,
@@ -134,7 +127,6 @@ const Navigation = ({
           }}
         />
       </Svg>
-      {/* </Pressable> */}
     </View>
   )
 }
