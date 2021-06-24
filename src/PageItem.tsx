@@ -6,19 +6,6 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 
-interface PageItemProps {
-  children: React.ReactNode
-  index: number
-  scrollX: Animated.SharedValue<number>
-  height: number
-  width: number
-  // display: "TOP_BOTTOM" | "CENTER_ONLY"
-  // opacityRangeOut: number[]
-  // scaleRangeOut: number[]
-  // spaceBetween: number
-  // textStyle?: TextStyleType
-}
-
 const getStatesInterval = (display: string, index: number, height: number) => {
   'worklet'
   switch (display) {
@@ -31,6 +18,19 @@ const getStatesInterval = (display: string, index: number, height: number) => {
   }
 }
 const colors = ['#00b5ad', '#2185D0', '#B5CC18', '#FBBD08', '#F2711C', '#DB2828', '#E03997', '#6435C9', '#A5673F', '#AAA', '#888', '#666', '#444', '#222', '#000']
+
+interface PageItemProps {
+  children: React.ReactNode
+  index: number
+  scrollX: Animated.SharedValue<number>
+  height: number
+  width: number
+  // display: "TOP_BOTTOM" | "CENTER_ONLY"
+  // opacityRangeOut: number[]
+  // scaleRangeOut: number[]
+  // spaceBetween: number
+  // textStyle?: TextStyleType
+}
 
 const PageItem = ({
   children,
@@ -47,13 +47,13 @@ const PageItem = ({
   const style = useAnimatedStyle(() => {
     // const statesInterval = getStatesInterval(display, index, height)
 
-    const left = interpolate(
-      -scrollX.value,
-      [(index - 1) * width, (index) * width, (index + 1) * width],
-      [(index - 1) * width, (index) * width, (index + 1) * width],
-      Extrapolate.CLAMP
-    )
-    console.log(`scrollX ${-scrollX.value} Item ${index} left ${left}`)
+    // const left = interpolate(
+    //   -scrollX.value,
+    //   [(index - 1) * width, (index) * width, (index + 1) * width],
+    //   [(index - 1) * width, (index) * width, (index + 1) * width],
+    //   Extrapolate.CLAMP
+    // )
+    // console.log(`scrollX ${-scrollX.value} Item ${index} left ${left}`)
     const opacity = interpolate(
       -scrollX.value,
       [(index - 1) * width, (index) * width, (index + 1) * width],
@@ -87,7 +87,7 @@ const PageItem = ({
       transform: [
         { scale },
       ],
-      left: -left,
+      left: scrollX.value,
       // borderRadius,
     };
   });

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import Picker from '@grean/react-native-carousel-picker';
 
@@ -69,6 +69,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Button color={pageIndex === 0 ? 'black' : 'white'} title="0" onPress={() => setPageIndex(0)} />
+      <Button color={pageIndex === 1 ? 'black' : 'white'} title="1" onPress={() => setPageIndex(1)} />
+      <Button color={pageIndex === 2 ? 'black' : 'white'} title="2" onPress={() => setPageIndex(2)} />
       <View style={styles.background}>
         {/* <ViewPager
           {...{
@@ -122,12 +125,17 @@ export default function App() {
               flexDirection: 'row',
               // justifyContent: 'flex-end',
             },
-            currentPageIndex,
+            index: pageIndex,
+            // navigation: false,
+            navigationHeight: 0.075,
             onChanged: onPageChanged,
           }}
         >
           <View style={styles.page}>
             <Text style={styles.text}>lol1</Text>
+          </View>
+          <View style={styles.page}>
+            <Text style={styles.text}>lol2</Text>
           </View>
           <View style={styles.page}>
             {/* <Text>lol</Text> */}
@@ -137,7 +145,7 @@ export default function App() {
               <Picker
                 {...{
                   items,
-                  currentItemIndex,
+                  index: itemIndex,
                   onChanged,
                   marginVerticalPercentage,
                   marginHorizontalPercentage,
@@ -172,6 +180,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: 'white',
+  },
   text: {
     color: 'white',
     fontSize: 80,
@@ -184,7 +195,7 @@ const styles = StyleSheet.create({
   },
   background: {
     height: '70%',
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     justifyContent: 'center',
   },
   header: {

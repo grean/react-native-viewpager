@@ -1,38 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, LayoutChangeEvent, StyleSheet } from 'react-native'
+import { View, Text, LayoutChangeEvent, StyleSheet, ViewStyle, LayoutRectangle } from 'react-native'
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'
 import Animated, { runOnJS, useAnimatedGestureHandler, useSharedValue, withSpring } from 'react-native-reanimated'
 import { snapPoint } from 'react-native-redash'
 
 import PageItem from './PageItem'
-
-type ParentLayout = {
-  width: number
-  height: number
-}
-export type TextStyleType = {
-  fontFamily?: string
-  fontSize?: number
-  backgroundColor?: string
-  color?: string
-}
-export type ContainerStyleType = {
-  backgroundColor?: string
-  justifyContent?: "center" | "flex-start" | "flex-end" | "space-between" | "space-around" | "space-evenly" | undefined
-}
-export type ChildStyleType = {
-  justifyContent?: "center" | "flex-start" | "flex-end" | "space-between" | "space-around" | "space-evenly" | undefined
-}
-
-// export type PageItemType = React.ReactNode
+import Navigation from './Navigation'
 
 type ContextType = {
   startX: number
   startY: number
   oldIndex: number
 }
-
-
 
 export const getSpringConfig = (velocity: number = 400) => {
   'worklet'
@@ -50,36 +29,51 @@ export const getSpringConfig = (velocity: number = 400) => {
 
 interface ViewPagerProps {
   children: React.ReactNode[]
-  childStyle: ChildStyleType
-  containerStyle: ContainerStyleType
-  currentPageIndex: number
-  onChanged: (index: number) => void
+  childStyle: ViewStyle
+  containerStyle: ViewStyle
+  index: number
+  navigation?: boolean
+  navigationHeight?: number
+  // navigationStyle: ViewStyle
+  onChanged?: (index: number) => void
+  pointColor?: number[]
+  pointRadius?: number
+  tickColor?: number[]
+  tickRadius?: number
+  strokeWidth?: number
 }
 
 const ViewPager = ({
   children,
   childStyle,
   containerStyle,
-  currentPageIndex,
+  index = 0,
+  navigation = true,
+  navigationHeight = 0.1,
+  tickRadius,
+  pointColor,
+  pointRadius,
+  strokeWidth,
+  tickColor,
+  // navigationStyle,
   onChanged,
 }: ViewPagerProps) => {
-  const [layout, setLayout] = useState<ParentLayout | null>(null);
+  const [layout, setLayout] = useState<LayoutRectangle | null>(null);
   const width = layout?.width ?? 0
   const height = layout?.height ?? 0
   const scrollX = useSharedValue(0)
-  const [itemIndex, setItemIndex] = useState(currentPageIndex);
+  // const [index, setIndex] = useState(index);
 
-  const onIndexChanged = (index: number) => {
+  const onIndexChanged = (newIndex: number) => {
     'worklet'
-    console.log(`VIEWPAGER setValue done ${index}`)
-    runOnJS(setItemIndex)(index)
+    // console.log(`onCurrentIndexChanged ${newIndex}`)
+    // runOnJS(setCurrentItemIndex)(newIndex)
+    if (onChanged !== undefined) {
+      runOnJS(onChanged)(newIndex)
+    }
   }
 
-  useEffect(() => {
-    onChanged(itemIndex)
-  }, [itemIndex]);
-
-  const contentOffsetX = -width * itemIndex
+  const contentOffsetX = -width * index
   scrollX.value = withSpring(contentOffsetX, getSpringConfig())
 
   const snapPoints = children.map((_, index: number) => index * -width)
@@ -87,7 +81,7 @@ const ViewPager = ({
   const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ContextType>({
     onStart: (event, ctx) => {
       if (ctx.oldIndex === undefined) {
-        ctx.oldIndex = itemIndex
+        ctx.oldIndex = index
       }
       ctx.startX = scrollX.value;
     },
@@ -110,9 +104,9 @@ const ViewPager = ({
 
   return (
     <View
-      onLayout={({ nativeEvent: { layout: { x, y, width, height } } }: LayoutChangeEvent) => {
-        console.log(`VIEWPAGER LAYOUT event x ${x} y ${y} width ${width} height ${height}`)
-        setLayout({ width, height })
+      onLayout={({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+        // console.log(`VIEWPAGER LAYOUT width ${layout.width} height ${layout.height}`)
+        setLayout(layout)
       }}
       style={containerStyle}
     >
@@ -120,7 +114,6 @@ const ViewPager = ({
         <PanGestureHandler
           {...{
             onGestureEvent
-
           }}
         >
           <Animated.View
@@ -141,32 +134,28 @@ const ViewPager = ({
                   {child}
                 </PageItem>
               )}
-            <View style={styles.footer}>
+            {navigation && <Navigation
+              {...{
+                containerStyle,
+                count: children.length,
+                height: height * navigationHeight,
+                index,
+                onChanged,
+                pointColor,
+                pointRadius,
+                scrollX,
+                strokeWidth,
+                tickColor,
+                tickRadius,
+                width,
+              }}
+            />}
 
-            </View>
           </Animated.View>
         </PanGestureHandler>
       </>}
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  footer: {},
-  viewPager: {
-    flex: 1,
-    // backgroundColor: '#fff',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    // alignItems: 'center',
-  },
-  panContainer: {
-    flex: 1,
-    // marginVertical,
-    // paddingTop: itemHeight,
-    // backgroundColor: "green",
-    flexDirection: 'row',
-  },
-});
 
 export default ViewPager
