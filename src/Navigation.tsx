@@ -8,10 +8,10 @@ import Tick from './Tick'
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 interface NavigationProps {
-  containerStyle?: ViewStyle
+  // containerStyle?: ViewStyle
   count: number
   height: number
-  index: number
+  // index: number
   navigationPadding?: number
   onChanged?: (index: number) => void
   pointColor?: number[]
@@ -26,15 +26,15 @@ interface NavigationProps {
 
 const Navigation = ({
   count,
-  containerStyle,
+  // containerStyle,
   height,
-  index,
+  // index,
   navigationPadding = height * 0.02,
   onChanged,
   pointColor = [255, 255, 255],
-  pointRadius = height / 6,
+  pointRadius = 6,
   tickColor = [255, 255, 255, 1],
-  tickRadius = height / 4,
+  tickRadius = 4,
   strokeWidth = 2,
   scrollX,
   // navigationStyle,
@@ -73,6 +73,9 @@ const Navigation = ({
     };
   });
 
+  const r = pointRadius === 0 ? 0 : height / pointRadius;
+  const rTick = tickRadius === 0 ? 0 : height / tickRadius;
+
   return (
     <View style={[{
       position: 'absolute',
@@ -85,7 +88,7 @@ const Navigation = ({
       // justifyContent: 'flex-start'
     },
       // navigationStyle,
-      containerStyle,
+      // containerStyle,
     ]}>
       <Svg
         {...{
@@ -105,7 +108,7 @@ const Navigation = ({
               index: key,
               height,
               onChanged,
-              r: tickRadius,
+              r: rTick,
               strokeWidth,
               width: part,
               x,
@@ -120,7 +123,7 @@ const Navigation = ({
             // cx: -scrollX.value,
             // cx: -scrollX.value / index - part / 2,
             cy: height / 2,
-            r: pointRadius,
+            r,
             // stroke: color,
             // strokeWidth: 2,
             // fill: color,

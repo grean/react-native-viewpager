@@ -29,12 +29,11 @@ export const getSpringConfig = (velocity: number = 400) => {
 
 interface ViewPagerProps {
   children: React.ReactNode[]
-  childStyle: ViewStyle
-  containerStyle: ViewStyle
+  // childStyle: ViewStyle
   index: number
   navigation?: boolean
   navigationHeight?: number
-  navigationPadding?: number
+  // navigationPadding?: number
   // navigationStyle: ViewStyle
   onChanged?: (index: number) => void
   pointColor?: number[]
@@ -42,16 +41,17 @@ interface ViewPagerProps {
   tickColor?: number[]
   tickRadius?: number
   strokeWidth?: number
+  style: ViewStyle
 }
 
 const ViewPager = ({
   children,
-  childStyle,
-  containerStyle,
+  // childStyle,
+  style,
   index = 0,
   navigation = true,
   navigationHeight = 0.1,
-  navigationPadding,
+  // navigationPadding,
   tickRadius,
   pointColor,
   pointRadius,
@@ -110,7 +110,7 @@ const ViewPager = ({
         // console.log(`VIEWPAGER LAYOUT width ${layout.width} height ${layout.height}`)
         setLayout(layout)
       }}
-      style={containerStyle}
+      style={style}
     >
       {layout && <>
         <PanGestureHandler
@@ -119,7 +119,14 @@ const ViewPager = ({
           }}
         >
           <Animated.View
-            style={childStyle}
+            style={{
+              flex: 1,
+              // marginVertical,
+              // paddingTop: itemHeight,
+              // backgroundColor: "green",
+              flexDirection: 'row',
+              // justifyContent: 'flex-end',
+            }}
           >
             {/* {console.log(`VIEWPAGER width ${layout.width} height ${layout.height}`)} */}
             {
@@ -138,10 +145,10 @@ const ViewPager = ({
               )}
             {navigation && <Navigation
               {...{
-                containerStyle,
+                // containerStyle,
                 count: children.length,
                 height: height * navigationHeight,
-                index,
+                // index,
                 onChanged,
                 pointColor,
                 pointRadius,
