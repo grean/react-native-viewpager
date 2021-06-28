@@ -1,5 +1,5 @@
 # react-native-viewpager
-Viewpager is a component that allows you to display your data in a circular select/dropdown way.<br/>
+Viewpager is a component that allows you to swipe horizontaly between the children componnents<br/>
 It's a full typescript responsive component that uses reanimated 2.<br/>
 The work is still in progress but you can use it and improve it if you want! PR are welcome.<br/>
 <br/>
@@ -9,7 +9,7 @@ The work is still in progress but you can use it and improve it if you want! PR 
 
 ## Demo
 ### Works on both iPhone and Android
-![Example in protrait](./assets/demo.gif)
+![Example](./assets/demo.gif)
 
 ## Installation
 Using yarn:
@@ -19,58 +19,55 @@ yarn add @grean/react-native-viewpager
 ```
 
 ## Usage
-You can control the picker value with the ```index``` prop.<br/>
+You can control the viewpager value with the ```index``` prop.<br/>
 When you manually change the value, ```onChanged``` callback will be called.<br/>
-You can pass an array of primitives for your values with the ```items``` prop.
+Navigation is made of SVG.
 
 ```tsx
 const currentItemIndex = 1
 const [index, setIndex] = useState(currentItemIndex);
-const items = [1, 2, 3, 4, 5] //or ['one', 'two', 'three'...]
 
 const onChanged = (newIndex: number) => {
   setIndex(newIndex)
 }
 
 //removed code for brevety
-  <View style={{
-    flex: 1,
-  }}>
-    <Picker
-      {...{
-        items,
-        index,
-        onChanged,
-        marginHorizontalPercentage: 0.05,
-        spaceBetween: 1 / 1.75,
-        textStyle: {
-          paddingVertical: 10,
-          textShadowColor: 'rgba(0, 0, 0, 0.75)',
-          textShadowOffset: { width: 3, height: 3 },
-          textShadowRadius: 10,
-        },
-      }}
-    />
+<ViewPager
+  {...{
+    style: {
+      flex: 1,
+    },
+    index,
+    navigationHeight: 0.075,
+    onChanged,
+  }}
+>
+  <View style={styles.page}>
+    <Text style={styles.text}>Screen 1</Text>
   </View>
+  <View style={styles.page}>
+    <Text style={styles.text}>Screen 2</Text>
+  </View>
+  <View style={styles.page}>
+    <Text style={styles.text}>Screen 3</Text>
+  </View>
+</ViewPager>
 ```
 
 ## Component props
 ```tsx
-interface ViewportProps<T> {
-  allowFontScaling?: boolean //false: see RN Text prop
-  containerStyle?: ViewStyle //All view style props
-  discoverable?: boolean //true: allow horizontal swipe to discover hidden item's part
-  display?: DisplayType //"TOP_BOTTOM": one of those "TOP_BOTTOM" | "CENTER_ONLY"
-  fontSize?: number //200: fontsize value
-  index?: number //current selected index
-  items?: T[] //array of primitives of any types
-  marginHorizontalPercentage?: number //0: pourcentage of width container, ie: 0.05
-  marginVerticalPercentage?: number //0: pourcentage of height container, ie: 0.05
-  onChanged?: (index: number) => void //Callback called when selected index changed
-  opacityRangeOut?: number[] //Opacity interpolation thresholds for items. Default value depends on display prop mode but you can still override them, ie: [0, 0.6, 1, 0.6, 0]
-  scaleRangeOut?: number[] //Scale interpolation thresholds for items. Default value depends on display prop mode but you can still override them, ie: [0, 0.6, 1, 0.6, 0]
-  spaceBetween?: number //1 / 2.25: space between displayed items 
-  textStyle?: TextStyle //All RN Text style props
+interface ViewPagerProps {
+  children: React.ReactNode[] //All views that you want to swipe
+  index: number //0: Initial index at startup
+  navigation?: boolean //true: If you want to display the navigation bar
+  navigationHeight?: number //0.1: Pourcentage of the viewpager container to define the height of the navigation bar
+  onChanged?: (index: number) => void //Callback invocked when manually change the current child view
+  pointColor?: number[] //[255,255,255]: Color of the navigation point whith [R,G,B] values
+  pointRadius?: number //6: Value that divide the height of the navigation bar to define the radius of the dot that represent the current selected view
+  tickColor?: number[] //[255,255,255]: Color of the navigation ticks whith [R,G,B] values
+  tickRadius?: number //4: Value that divide the height of the navigation bar to define the radius of the ticks that represent each child view
+  strokeWidth?: number //2: Value that define the strokeWidth svg prop of the tick component
+  style: ViewStyle //All RN view style props
 }
 ```
 
