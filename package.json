@@ -28,9 +28,9 @@
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-gesture-handler": "~1.10.2",
-    "react-native-reanimated": "~2.1.0",
-    "react-native-svg": "12.1.0",
-    "react-native-redash": "^16.0.11"
+    "react-native-reanimated": "2.2.0",
+    "react-native-redash": "^16.0.11",
+    "react-native-svg": "12.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
@@ -43,9 +43,9 @@
     "react-native": "0.63.2",
     "react-native-builder-bob": "^0.18.1",
     "react-native-gesture-handler": "~1.10.2",
-    "react-native-reanimated": "~2.1.0",
+    "react-native-reanimated": "2.2.0",
     "react-native-redash": "^16.0.11",
-    "react-native-svg": "12.1.0",
+    "react-native-svg": "12.1.1",
     "release-it": "*",
     "typescript": "4.2.4"
   },
