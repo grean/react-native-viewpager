@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 import Picker from '@grean/react-native-carousel-picker';
 
 import ViewPager from '../src/index';
+import { NavigationType } from '../src/types';
 
 
 export default function App() {
@@ -73,43 +74,10 @@ export default function App() {
       <Button color={pageIndex === 1 ? 'black' : 'white'} title="1" onPress={() => setPageIndex(1)} />
       <Button color={pageIndex === 2 ? 'black' : 'white'} title="2" onPress={() => setPageIndex(2)} />
       <View style={styles.background}>
-        {/* <ViewPager
-          {...{
-            containerStyle: {
-              flex: 0.85,
-              // flex: 0.765,
-              // backgroundColor: '#fff',
-              overflow: 'hidden',
-              // alignItems: 'center',
-              // backgroundColor: 'pink',
-              // backgroundColor: 'transparent',
-            },
-            childStyle: {
-              flex: 1,
-              // marginVertical,
-              // paddingTop: itemHeight,
-              backgroundColor: "green",
-              flexDirection: 'row',
-              // justifyContent: 'flex-end',
-            },
-            currentPageIndex,
-            onChanged: onPageChanged,
-          }}
-        >
-          <View style={styles.page}>
-            <Text style={styles.text}>lol1</Text>
-          </View>
-          <View style={styles.page}>
-            <Text style={styles.text}>lol2</Text>
-          </View>
-          <View style={styles.page}>
-            <Text style={styles.text}>lol3</Text>
-          </View>
-        </ViewPager> */}
         <ViewPager
           {...{
             style: {
-              flex: 0.85,
+              flex: 1,
               // flex: 0.765,
               // backgroundColor: '#fff',
               // overflow: 'hidden',
@@ -127,7 +95,11 @@ export default function App() {
             // },
             index: pageIndex,
             // navigation: false,
-            navigationHeight: 0.075,
+            navigationHeight: 0.08,
+            navigationPadding: 0.05,
+            // navigationHeight: 0.075,
+            // navigationType: NavigationType.ABSOLUTE,
+            navigationType: NavigationType.FLEX,
             onChanged: onPageChanged,
             pointColor: [255, 0, 255],
             pointRadius: 8,
@@ -198,7 +170,7 @@ const styles = StyleSheet.create({
   },
   background: {
     height: '70%',
-    backgroundColor: 'white',
+    backgroundColor: 'orange',
     justifyContent: 'center',
   },
   header: {
