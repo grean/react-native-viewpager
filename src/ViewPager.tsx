@@ -6,6 +6,7 @@ import { snapPoint } from 'react-native-redash'
 
 import PageItem from './PageItem'
 import Navigation from './Navigation'
+import { NavigationType } from './types'
 
 type ContextType = {
   startX: number
@@ -31,8 +32,9 @@ interface ViewPagerProps {
   children: React.ReactNode[]
   // childStyle: ViewStyle
   index: number
-  navigation?: boolean
   navigationHeight?: number
+  navigationPadding?: number
+  navigationType?: NavigationType
   // navigationPadding?: number
   // navigationStyle: ViewStyle
   onChanged?: (index: number) => void
@@ -49,9 +51,9 @@ const ViewPager = ({
   // childStyle,
   style,
   index = 0,
-  navigation = true,
   navigationHeight = 0.1,
-  // navigationPadding,
+  navigationPadding = 0,
+  navigationType = NavigationType.ABSOLUTE,
   tickRadius,
   pointColor,
   pointRadius,
@@ -104,6 +106,13 @@ const ViewPager = ({
     },
   });
 
+  const navHeight = height * navigationHeight
+  const navPadding = height * navigationPadding
+  let pageHeight = height
+  if (navigationType === NavigationType.FLEX) {
+    pageHeight -= (navHeight + navPadding)
+  }
+
   return (
     <View
       onLayout={({ nativeEvent: { layout } }: LayoutChangeEvent) => {
@@ -134,7 +143,8 @@ const ViewPager = ({
                 <PageItem
                   {...{
                     key: index,
-                    height,
+                    height: pageHeight,
+                    // height,
                     width,
                     index,
                     scrollX,
@@ -143,12 +153,14 @@ const ViewPager = ({
                   {child}
                 </PageItem>
               )}
-            {navigation && <Navigation
+            {(navigationType !== NavigationType.NONE) && <Navigation
               {...{
                 // containerStyle,
                 count: children.length,
-                height: height * navigationHeight,
+                height: navHeight,
                 // index,
+                navigationPadding: navPadding,
+                navigationType,
                 onChanged,
                 pointColor,
                 pointRadius,
@@ -159,7 +171,6 @@ const ViewPager = ({
                 width,
               }}
             />}
-
           </Animated.View>
         </PanGestureHandler>
       </>}

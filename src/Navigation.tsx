@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, Text, ViewStyle, Pressable } from 'react-native'
+import { View, Text, ViewStyle, Pressable, StyleSheet } from 'react-native'
 import Animated, { Extrapolate, interpolate, useAnimatedProps } from 'react-native-reanimated'
 import Svg, { Circle } from 'react-native-svg'
 
 import Tick from './Tick'
+import { NavigationType } from './types'
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -12,7 +13,8 @@ interface NavigationProps {
   count: number
   height: number
   // index: number
-  navigationPadding?: number
+  navigationPadding: number
+  navigationType: NavigationType
   onChanged?: (index: number) => void
   pointColor?: number[]
   pointRadius?: number
@@ -29,7 +31,8 @@ const Navigation = ({
   // containerStyle,
   height,
   // index,
-  navigationPadding = height * 0.02,
+  navigationPadding,
+  navigationType,
   onChanged,
   pointColor = [255, 255, 255],
   pointRadius = 6,
@@ -77,16 +80,19 @@ const Navigation = ({
   const rTick = tickRadius === 0 ? 0 : height / tickRadius;
 
   return (
-    <View style={[{
-      position: 'absolute',
-      bottom: height * navigationPadding,
-      // top: 0,
-      width,
-      height,
-      // backgroundColor: 'rgba(0,0,0,0.2)',
-      flexDirection: 'row',
-      // justifyContent: 'flex-start'
-    },
+    <View style={[
+      {
+        // flex: 1,
+        // ...navStyle,
+        position: 'absolute',
+        bottom: navigationPadding,
+        // top: 0,
+        width,
+        height,
+        // backgroundColor: 'rgba(0,0,0,0.2)',
+        flexDirection: 'row',
+        // justifyContent: 'flex-start'
+      },
       // navigationStyle,
       // containerStyle,
     ]}>
